@@ -91,7 +91,7 @@ Follow **`SETUP_DIALOGFLOW.md`**. In short: build the agent, point its Webhook a
 
 ---
 
-## Try it (demo script)
+## Try it 
 
 With everything running, chat with the widget on the page:
 
@@ -106,9 +106,5 @@ With everything running, chat with the widget on the page:
 
 - **ngrok URL changes on restart** (free tier). If you restart ngrok, update the new URL in **two** places in Dialogflow: the Webhook URL (ending in `/webhook`) and the Tool's `servers.url` (base, no `/webhook`). See `SETUP_DIALOGFLOW.md`.
 - **Turn off VPN / TLS inspection (e.g. Zscaler)** while running ngrok; TLS interception breaks ngrok's connection.
-- **Cost**: Dialogflow bills per request (a few cents for a demo). An idle agent costs nothing. Generative features require billing enabled on the project.
 - **State is in-memory**: restarting the backend resets balances to the starting values. Swap the dicts in `backend/mcp_server.py` for a real datastore to go beyond a prototype.
 
-## Optional: deploy the backend
-
-A `Dockerfile` is included. The backend can run on any container host (for example Google Cloud Run), which gives a stable URL instead of ngrok. Point the Dialogflow Webhook and Tool at that URL instead.
