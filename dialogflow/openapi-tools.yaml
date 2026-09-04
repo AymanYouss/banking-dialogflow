@@ -1,0 +1,117 @@
+# OpenAPI schema for the Dialogflow CX Playbook "Tool".
+# In the CX console: Playbooks -> Tools -> Create -> type "OpenAPI", then paste
+# this whole file. Set the servers.url below to your public backend base URL
+# (your ngrok URL or a Cloud Run URL). No /webhook, no trailing slash.
+openapi: 3.0.0
+info:
+  title: Northwind Banking Actions
+  version: "1.0.0"
+  description: Banking actions the playbook can call. Backed by an MCP server.
+servers:
+  - url: https://YOUR_NGROK_URL.ngrok-free.app
+paths:
+  /tools/accounts:
+    get:
+      operationId: get_accounts
+      summary: List the customer's accounts and current balances.
+      responses:
+        "200":
+          description: Accounts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accounts:
+                    type: array
+                    items: { $ref: "#/components/schemas/Account" }
+  /tools/transactions:
+    get:
+      operationId: get_transactions
+      summary: List recent transactions, optionally for one account.
+      parameters:
+        - name: account_id
+          in: query
+          required: false
+          schema: { type: string, enum: [checking, savings, credit] }
+        - name: limit
+          in: query
+          required: false
+          schema: { type: integer, default: 10 }
+      responses:
+        "200":
+          description: Transactions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transactions:
+                    type: array
+                    items: { $ref: "#/components/schemas/Transaction" }
+  /tools/transfer:
+    post:
+      operationId: transfer_funds
+      summary: Transfer money between the customer's own accounts.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [from_account, to_account, amount]
+              properties:
+                from_account: { type: string, enum: [checking, savings, credit] }
+                to_account: { type: string, enum: [checking, savings, credit] }
+                amount: { type: number, description: Positive USD amount }
+      responses:
+        "200":
+          description: Result
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ActionResult" }
+  /tools/pay-bill:
+    post:
+      operationId: pay_bill
+      summary: Pay a bill to a payee from an account.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [payee, amount]
+              properties:
+                from_account: { type: string, enum: [checking, savings, credit], default: checking }
+                payee: { type: string }
+                amount: { type: number, description: Positive USD amount }
+      responses:
+        "200":
+          description: Result
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ActionResult" }
+components:
+  schemas:
+    Account:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        type: { type: string }
+        balance: { type: number }
+        currency: { type: string }
+    Transaction:
+      type: object
+      properties:
+        id: { type: string }
+        account_id: { type: string }
+        date: { type: string }
+        description: { type: string }
+        amount: { type: number }
+    ActionResult:
+      type: object
+      properties:
+        ok: { type: boolean }
+        message: { type: string }
+        error: { type: string }

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Northwind Bank — Prototype</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Dialogflow CX Messenger -->
+  <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css" />
+  <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo">◆</span> Northwind Bank</div>
+    <div class="user">Good afternoon, Alex</div>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <h2>Accounts</h2>
+      <div id="accounts" class="accounts"></div>
+
+      <h2>Recent activity</h2>
+      <table class="txns">
+        <thead><tr><th>Date</th><th>Description</th><th class="amt">Amount</th></tr></thead>
+        <tbody id="txns"></tbody>
+      </table>
+    </section>
+
+    <aside class="side">
+      <div class="card status">
+        <div class="dot" id="conn-dot"></div>
+        <span id="conn-label">Connecting…</span>
+      </div>
+      
+
+      <!-- Local demo controls: visible only until you wire a real CX agent -->
+      <div class="card demo" id="demo-panel" hidden>
+        <strong>Local demo (no CX agent yet)</strong>
+        <div class="demo-buttons">
+          <button data-tag="check_balance">Check balance</button>
+          <button data-tag="list_transactions">List transactions</button>
+          <button data-tag="transfer">Transfer $200 → savings</button>
+          <button data-tag="pay">Pay $75 electric</button>
+        </div>
+        <pre id="demo-out"></pre>
+      </div>
+    </aside>
+  </main>
+
+  <script src="/config.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

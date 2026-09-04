@@ -1,0 +1,89 @@
+:root {
+  --bg: #0f1720;
+  --panel: #17212b;
+  --card: #1e2a37;
+  --line: #2a3a49;
+  --text: #e7eef5;
+  --muted: #8ba0b3;
+  --accent: #3b82f6;
+  --green: #34d399;
+  --red: #f87171;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; font-family: "Inter", system-ui, sans-serif;
+  background: var(--bg); color: var(--text);
+}
+.topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 28px; background: var(--panel); border-bottom: 1px solid var(--line);
+}
+.brand { font-weight: 700; font-size: 18px; letter-spacing: .3px; }
+.logo { color: var(--accent); margin-right: 6px; }
+.user { color: var(--muted); font-size: 14px; }
+
+.layout {
+  display: grid; grid-template-columns: 1fr 320px; gap: 20px;
+  max-width: 1080px; margin: 28px auto; padding: 0 20px;
+}
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; }
+h2 { font-size: 14px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); margin: 22px 0 12px; }
+h2:first-child { margin-top: 4px; }
+
+.accounts { display: grid; gap: 12px; }
+.account {
+  display: flex; justify-content: space-between; align-items: center;
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px;
+  transition: box-shadow .3s, transform .3s;
+}
+.account.flash { box-shadow: 0 0 0 2px var(--accent); transform: translateY(-1px); }
+.account .name { font-weight: 600; }
+.account .type { color: var(--muted); font-size: 12px; text-transform: capitalize; }
+.account .balance { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.balance.neg { color: var(--red); }
+
+.txns { width: 100%; border-collapse: collapse; font-size: 14px; }
+.txns th { text-align: left; color: var(--muted); font-weight: 500; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+.txns td { padding: 10px; border-bottom: 1px solid var(--line); }
+.txns .amt, .txns td.amt { text-align: right; font-variant-numeric: tabular-nums; }
+td.pos { color: var(--green); } td.neg { color: var(--red); }
+tr.new td { animation: rowin 1.2s ease; }
+@keyframes rowin { from { background: rgba(59,130,246,.25); } to { background: transparent; } }
+
+.side { display: grid; gap: 14px; align-content: start; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+.card.hint p { color: var(--muted); font-size: 13px; line-height: 1.5; margin: 8px 0 0; }
+.status { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: #f59e0b; }
+.dot.on { background: var(--green); } .dot.off { background: var(--red); }
+
+.demo .demo-buttons { display: grid; gap: 8px; margin-top: 10px; }
+.demo button {
+  background: var(--card); color: var(--text); border: 1px solid var(--line);
+  border-radius: 9px; padding: 9px 12px; font-size: 13px; cursor: pointer;
+}
+.demo button:hover { border-color: var(--accent); }
+.demo pre { color: var(--muted); font-size: 12px; white-space: pre-wrap; margin: 10px 0 0; }
+
+df-messenger {
+  /* Minimal, safe recolor only. No custom radius/shadow/background so
+     df-messenger keeps its clean native layout (no nested-card artifacts). */
+  --df-messenger-primary-color: #2563eb;
+  --df-messenger-font-family: "Inter", system-ui, sans-serif;
+  --df-messenger-font-color: #1e293b;
+
+  --df-messenger-message-user-background: #2563eb;
+  --df-messenger-message-user-font-color: #ffffff;
+  --df-messenger-message-bot-background: #f1f5f9;
+  --df-messenger-message-bot-font-color: #1e293b;
+
+  /* The only real fix needed: make typed text visible */
+  --df-messenger-input-font-color: #1e293b;
+  --df-messenger-input-placeholder-font-color: #94a3b8;
+  --df-messenger-send-icon-color: #2563eb;
+
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 999;
+}
