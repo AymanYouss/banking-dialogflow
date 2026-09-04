@@ -47,8 +47,8 @@ frontend/
   config.js       Your Dialogflow project-id / agent-id go here
 dialogflow/
   openapi-tools.yaml     The OpenAPI schema for the Playbook Tool
-  architecture.excalidraw / .png   The architecture diagram
-SETUP_DIALOGFLOW.md      Full step-by-step to build the agent in Dialogflow
+  architecture.png       The architecture diagram
+SETUP.md      Full step-by-step: run locally, expose with ngrok, build the Dialogflow agent
 requirements.txt, Dockerfile, .env.example
 ```
 
@@ -60,7 +60,7 @@ requirements.txt, Dockerfile, .env.example
 
 - **Python 3.11 or 3.12** (not 3.14, some dependencies have no prebuilt wheels for it yet).
 - **ngrok** (`brew install ngrok`) with a free account and authtoken set.
-- A Google Cloud project with billing enabled and a Dialogflow CX agent (see `SETUP_DIALOGFLOW.md`).
+- A Google Cloud project with billing enabled and a Dialogflow CX agent (see `SETUP.md`).
 
 ### 1. Start the backend and website (terminal 1)
 
@@ -87,7 +87,7 @@ Copy the `https://....ngrok-free.app` URL it prints. This is what Dialogflow wil
 
 ### 3. Connect Dialogflow
 
-Follow **`SETUP_DIALOGFLOW.md`**. In short: build the agent, point its Webhook and Tool at your ngrok URL, and put your `project-id` / `agent-id` in `frontend/config.js`. Then reload the page and the real chat widget appears.
+Follow **`SETUP.md`**. In short: build the agent, point its Webhook and Tool at your ngrok URL, and put your `project-id` / `agent-id` in `frontend/config.js`. Then reload the page and the real chat widget appears.
 
 ---
 
@@ -104,7 +104,7 @@ With everything running, chat with the widget on the page:
 
 ## Important notes
 
-- **ngrok URL changes on restart** (free tier). If you restart ngrok, update the new URL in **two** places in Dialogflow: the Webhook URL (ending in `/webhook`) and the Tool's `servers.url` (base, no `/webhook`). See `SETUP_DIALOGFLOW.md`.
+- **ngrok URL changes on restart** (free tier). If you restart ngrok, update the new URL in **two** places in Dialogflow: the Webhook URL (ending in `/webhook`) and the Tool's `servers.url` (base, no `/webhook`). See `SETUP.md`.
 - **Turn off VPN / TLS inspection (e.g. Zscaler)** while running ngrok; TLS interception breaks ngrok's connection.
 - **State is in-memory**: restarting the backend resets balances to the starting values. Swap the dicts in `backend/mcp_server.py` for a real datastore to go beyond a prototype.
 
